@@ -44,7 +44,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		// 用户存在,将user信息写入上下文
+		// 验证通过后,将user信息写入上下文,这样用户才能够查询信息
 		c.Set("user", user)
 	}
 }

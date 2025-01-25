@@ -11,20 +11,18 @@ var jwtKey = []byte("easydemo_secret_key")
 
 // Claims 定义一个结构体，用来存储要加密的信息
 type Claims struct {
-	// 此处的ID是GORM MODEL中的ID
 	UserId uint
 	jwt.StandardClaims
 }
 
 func ReleaseToken(user model.User) (string, error) {
-	// 过期时间点
-	expirationTime := time.Now().Add(7 * 24 * time.Hour)
 	// 生成token
 	claims := &Claims{
+		// 此处的ID是GORM MODEL中的ID
 		UserId: user.ID,
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: expirationTime.Unix(), // 过期时间
-			IssuedAt:  time.Now().Unix(),     // 请求时间
+			ExpiresAt: time.Now().Add(7 * 24 * time.Hour).Unix(), // 过期时间
+			IssuedAt:  time.Now().Unix(),                         // 请求时间
 			Issuer:    "easydemo",
 			Subject:   "user token",
 		},
